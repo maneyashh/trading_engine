@@ -1,0 +1,10 @@
+/workspaces/trading_engine/algo_bot/target/debug/build/openssl-sys-7164eba82659fea9/build_script_main-7164eba82659fea9.d: /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-sys-0.9.117/build/main.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-sys-0.9.117/build/cfgs.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-sys-0.9.117/build/find_normal.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-sys-0.9.117/build/run_bindgen.rs
+
+/workspaces/trading_engine/algo_bot/target/debug/build/openssl-sys-7164eba82659fea9/build_script_main-7164eba82659fea9: /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-sys-0.9.117/build/main.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-sys-0.9.117/build/cfgs.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-sys-0.9.117/build/find_normal.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-sys-0.9.117/build/run_bindgen.rs
+
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-sys-0.9.117/build/main.rs:
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-sys-0.9.117/build/cfgs.rs:
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-sys-0.9.117/build/find_normal.rs:
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-sys-0.9.117/build/run_bindgen.rs:
+
+# env-dep:CARGO_PKG_VERSION=0.9.117
