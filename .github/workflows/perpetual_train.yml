@@ -1,4 +1,18 @@
-- name: Wake Up Kaggle Supercomputer
+name: Apex Supervisor Heartbeat
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */12 * * *' # Runs every 12 hours automatically
+
+jobs:
+  train-on-kaggle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Wake Up Kaggle Supercomputer
         env:
           KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
