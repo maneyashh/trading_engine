@@ -7,7 +7,7 @@
   "is_private": "true",
   "enable_gpu": "true",
   "enable_internet": "true",
-  "dataset_sources": [],
+  "dataset_sources": ["rashedsumon/nse-nifty-50-index-minute-data-2015-to-2025"],
   "competition_sources": [],
   "kernel_sources": []
 }

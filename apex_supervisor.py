@@ -12,7 +12,21 @@ HF_REPO = "maneyashh/nifty-trading-brain"  # CHANGE THIS TO YOUR HF USERNAME
 api = HfApi()
 
 # 1. Initialize the Environment
-env = NiftyTradingEnv(data_path="data/nifty_5m_historical.csv")
+import glob
+
+# Auto-detect the massive CSV file mounted by Kaggle
+dataset_folder = "/kaggle/input/nse-nifty-50-index-minute-data-2015-to-2025"
+csv_files = glob.glob(f"{dataset_folder}/*.csv")
+
+if csv_files:
+    active_data = csv_files[0]
+    print(f"Deep History Found: Loading {active_data}...")
+else:
+    # Fallback if testing locally on your Codespace
+    active_data = "data/nifty_5m_historical.csv"
+    print("Warning: Using local short-term dataset.")
+
+env = NiftyTradingEnv(data_path=active_data)
 env.current_fee = 0.0  # Start with zero friction
 
 # 2. Build the LSTM Brain (Working Memory)
