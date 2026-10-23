@@ -48,14 +48,13 @@ class NiftyTradingEnv(gym.Env):
         self.lower_bb = self.df['Lower_BB'].values
         
         self.action_space = spaces.Discrete(3)
-        
-        # AI now sees 10 variables, allowing negative numbers for MACD
         self.observation_space = spaces.Box(low=-np.inf, high=np.inf, shape=(10,), dtype=np.float32)
         
         self.current_step = 0
         self.balance = 2700.0  
         self.position = 0 
         self.entry_price = 0.0
+        self.current_fee = 40.0 # Supervisor controls friction
 
     def reset(self, seed=None):
         self.current_step = 0
@@ -71,7 +70,6 @@ class NiftyTradingEnv(gym.Env):
         norm_sma20 = self.sma_20[self.current_step] / 30000.0
         norm_rsi = self.rsi[self.current_step] / 100.0
         
-        # New Indicator Normalization
         norm_vol = self.volume[self.current_step] / 1000000.0
         norm_macd = self.macd[self.current_step] / 100.0
         norm_signal = self.signal_line[self.current_step] / 100.0
@@ -91,14 +89,6 @@ class NiftyTradingEnv(gym.Env):
             norm_lower_bb
         ], dtype=np.float32)
 
-        return np.array([
-            norm_price, 
-            norm_balance,
-            norm_sma5,
-            norm_sma20,
-            norm_rsi
-        ], dtype=np.float32)
-
     def step(self, action):
         current_price = self.prices[self.current_step]
         
@@ -113,7 +103,7 @@ class NiftyTradingEnv(gym.Env):
             
         elif action == 2 and self.position == 1:
             gross_profit = current_price - self.entry_price
-            net_profit = gross_profit - 40.0  # ₹zero Fee
+            net_profit = gross_profit - self.current_fee  # FIX: Uses dynamic fee
             self.balance += net_profit
             self.position = 0
             self.entry_price = 0.0
@@ -127,14 +117,12 @@ class NiftyTradingEnv(gym.Env):
         new_unrealized_pnl = (new_price - self.entry_price) if self.position == 1 else 0
         new_net_worth = self.balance + new_unrealized_pnl
         
-        # 5. THE FIX: The reward is strictly the change in net worth.
-        # This teaches it that holding a winning trade is good, and paying fees for bad trades is bad.
-        # 5. THE FIX: Scale the net worth change so the neural network doesn't choke on large numbers
+        # 5. The reward is strictly the change in net worth.
         reward = (new_net_worth - prev_net_worth) / 10.0
         
-        return self._get_observation(), reward, done, False, {}
+        return self._get_observation(), reward, done, False, {'net_worth': new_net_worth}
 
 if __name__ == "__main__":
     env = NiftyTradingEnv(data_path="data/nifty_5m_historical.csv")
     obs, _ = env.reset()
-    print(f"Environment Initialized. AI Vision (Price, Bal, SMA5, SMA20, RSI): {obs}")
+    print(f"Environment Initialized. AI Vision: {obs}")
